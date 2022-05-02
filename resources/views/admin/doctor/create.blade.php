@@ -28,6 +28,11 @@
 
     <div class="row justify-content-center">
         <div class="col-lg-10">
+            @if(Session::has('message'))
+                <div class="alert alert-success">
+                    {{ Session::get('message') }}
+                </div>
+            @endif
             <div class="card">
                 <div class="card-header"><h3>Add doctor</h3></div>
                 <div class="card-body">
@@ -87,9 +92,9 @@
                                 @enderror
                             </div>
                             <div class="col-lg-6">
-                                <label for="">Adress</label>
-                                <input type="text" name="adress" class="form-control @error('adress') is-invalid @enderror" placeholder="doctor adress">
-                                @error('adress')
+                                <label for="">address</label>
+                                <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" placeholder="doctor address">
+                                @error('address')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -139,7 +144,7 @@
                                         <option value="{{ $role->id }}">{{ $role->name }}</option>
                                     @endforeach
                                 </select>
-                                @error('role')
+                                @error('role_id')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
