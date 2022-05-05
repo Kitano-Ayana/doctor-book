@@ -29,6 +29,11 @@
     </div>
     <div class="row">
         <div class="col-md-12">
+            @if(Session::has('message'))
+                <div class="alert bg-success alert-success text-white" role="alert">
+                    {{ Session::get('message') }}
+                </div>
+            @endif
             <div class="card">
                 <div class="card-header"><h3>Data Table</h3></div>
                 <div class="card-body">
