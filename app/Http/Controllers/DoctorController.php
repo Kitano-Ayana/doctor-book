@@ -25,7 +25,7 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        //
+        return  view('admin.doctor.create');
     }
 
     /**
@@ -71,7 +71,8 @@ class DoctorController extends Controller
      */
     public function edit($id)
     {
-        return "edit";
+        $user = User::find($id);
+        return view('admin.doctor.edit',compact('user'));
     }
 
     /**
@@ -83,7 +84,31 @@ class DoctorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validateUpdate($request,$id);
+        $data         = $request->all();
+        $user         = User::find($id);
+        $userPassword = $user->password;
+        $imageName    = $user->image;
+
+        if($request->hasFile('image')){
+            $image       = $request->file('image');
+            $imageName        = $image->hashName();
+            $destination = public_path('/image');
+            $image->move($destination,$imageName);
+        }
+        $data['image'] = $imageName;
+
+        if($request->password){
+            $data['password'] = bcrypt($request->password);
+         }else{
+            $data['password'] = $userPassword;
+        }
+
+        $user->update($data);
+        return redirect()->route('doctor.index')->with('message', 'Doctor update successfully');
+
+
+
     }
 
     /**
@@ -112,5 +137,21 @@ class DoctorController extends Controller
             'role_id'       => 'required',
             'description'   => 'required',
         ]);
+    }
+
+    public function validateUpdate($request,$id){
+        return
+            $this->validate($request, [
+                'name'          => 'required',
+                'email'         => 'required|unique:users,email,'.$id,
+                'gender'        => 'required',
+                'education'     => 'required',
+                'address'       => 'required',
+                'department'    => 'required',
+                'phone_number' => 'required|numeric',
+                'image'         => 'mimes:jpeg,jpg,png',
+                'role_id'       => 'required',
+                'description'   => 'required',
+            ]);
     }
 }
