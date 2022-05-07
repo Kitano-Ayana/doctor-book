@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\User;
 
@@ -39,10 +40,7 @@ class DoctorController extends Controller
        $this->validateStore($request);
 
        $data        = $request->all();
-       $image       = $request->file('image');
-       $name        = $image->hashName();
-       $destination = public_path('/image');
-       $image->move($destination,$name);
+       $name = (new User)->userAvatar($request);
 
        $data['image'] = $name;
        $data['password'] = bcrypt($request->password);
@@ -60,7 +58,8 @@ class DoctorController extends Controller
      */
     public function show($id)
     {
-        return "show";
+        $user = User::find($id);
+       return view('admin.doctor.show',compact('user'));
     }
 
     /**
@@ -91,10 +90,8 @@ class DoctorController extends Controller
         $imageName    = $user->image;
 
         if($request->hasFile('image')){
-            $image       = $request->file('image');
-            $imageName        = $image->hashName();
-            $destination = public_path('/image');
-            $image->move($destination,$imageName);
+            $imageName        = (new User)->userAvatar($request);
+            unlink(public_path('images/'.$user->image));
         }
         $data['image'] = $imageName;
 
@@ -119,7 +116,15 @@ class DoctorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(auth()->user()->id == $id){
+            abort(401);
+        }
+        $user = User::find($id);
+        $useDelete = $user->delete();
+        if($useDelete){
+            unlink(public_path('images/'.$user->image));
+        }
+        return redirect()->route('doctor.index')->with('message', 'Doctor deleted successfully');
     }
 
     public function validateStore($request){
