@@ -36,13 +36,14 @@
             <div class="card">
                 <div class="card-header"><h3>Confirm Delete</h3></div>
                 <div class="card-body">
+                    <img src="{{ asset('image') }}/{{ $user->image }}" width="120">
                     <h2>{{ $user->name }}</h2>
                     <form class="forms-sample" action="{{ route('doctor.destroy',[$user->id]) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('DELETE')
 
                         <button type="submit" class="btn btn-danger mr-2">Confirm</button>
-                        <a href="{{ route('doctor.index') }}"><button type="button" class="btn btn-light">Cancel</button></a>
+                        <a href="{{ route('doctor.index') }}"><button type="button" class="btn btn-secondary">Cancel</button></a>
                     </form>
                 </div>
             </div>

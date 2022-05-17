@@ -28,4 +28,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('doctor','DoctorController');
+Route::group(['middleware' => ['auth','admin']],function (){
+    Route::resource('doctor','DoctorController');
+});
+
+Route::resource('appointment','AppointmentController');
+
