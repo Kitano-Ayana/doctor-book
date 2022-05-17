@@ -15,7 +15,7 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $users = User::get();
+        $users = User::where('role_id','!=',3)->get();
         return view('admin.doctor.index',compact('users'));
     }
 
@@ -116,7 +116,7 @@ class DoctorController extends Controller
      */
     public function destroy($id)
     {
-        if(auth()->user()->id == $id){
+        if(auth()->id = $id){
             abort(401);
         }
         $user = User::find($id);
