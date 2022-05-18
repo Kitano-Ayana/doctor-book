@@ -27,62 +27,75 @@
     </div>
 
     <div class="container">
-        <div class="card">
-            <div class="card-header">
-                Chose date
+        @if(Session::has('message'))
+            <div class="alert alert-success">
+                {{ Session::get('message') }}
             </div>
-            <div class="card-body">
-                <input type="text" class="form-control datetimepicker-input" id="datetime" data-toggle="datetimepicker" data-target="#datepicker">
+        @endif
+        @foreach($errors->all() as $error)
+            <div class="alert alert-danger">
+                {{ $error }}
             </div>
-        </div>
-        <div class="card">
-            <div class="card-header">
-                Chose Am time
-                <span style="margin-left: 700px">Check/Uncheck
-                    <input type="checkbox" onclick=" for(c in document.getElementsByName('time[]')) document.getElementsByName('time[]').item(c).checked=this.checked">
-                </span>
+        @endforeach
+        <form action="{{ route('appointment.store') }}" method="post">
+                @csrf
+            <div class="card">
+                <div class="card-header">
+                    Chose date
+                </div>
+                <div class="card-body">
+                    <input type="text" class="form-control datetimepicker-input" id="datetime" data-toggle="datetimepicker" data-target="#datepicker" name="date">
+                </div>
             </div>
-            <div class="card-body">
-                <table class="table table-striped">
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td><input type="checkbox" name="time[]" class="form-control" value="6am">6am</td>
-                        <td><input type="checkbox" name="time[]" class="form-control" value="6.20am">6.20am</td>
-                        <td><input type="checkbox" name="time[]" class="form-control" value="6.40am">6.40am</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td><input type="checkbox" name="time[]" class="form-control" value="7am">7am</td>
-                        <td><input type="checkbox" name="time[]" class="form-control" value="7.20am">7.20am</td>
-                        <td><input type="checkbox" name="time[]" class="form-control" value="7.40am">7.40am</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td><input type="checkbox" name="time[]" class="form-control" value="8am">8am</td>
-                        <td><input type="checkbox" name="time[]" class="form-control" value="8.20am">8.20am</td>
-                        <td><input type="checkbox" name="time[]" class="form-control" value="8.40am">8.40am</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td><input type="checkbox" name="time[]" class="form-control" value="9am">9am</td>
-                        <td><input type="checkbox" name="time[]" class="form-control" value="9.20am">9.20am</td>
-                        <td><input type="checkbox" name="time[]" class="form-control" value="9.40am">9.40am</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">5</th>
-                        <td><input type="checkbox" name="time[]" class="form-control" value="10am">10am</td>
-                        <td><input type="checkbox" name="time[]" class="form-control" value="10.20am">10.20am</td>
-                        <td><input type="checkbox" name="time[]" class="form-control" value="10.40am">10.40am</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">6</th>
-                        <td><input type="checkbox" name="time[]" class="form-control" value="11am">11am</td>
-                        <td><input type="checkbox" name="time[]" class="form-control" value="11.20am">11.20am</td>
-                        <td><input type="checkbox" name="time[]" class="form-control" value="11.40am">11.40am</td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="card">
+                <div class="card-header">
+                    Chose Am time
+                    <span style="margin-left: 700px">Check/Uncheck
+                        <input type="checkbox" onclick=" for(c in document.getElementsByName('time[]')) document.getElementsByName('time[]').item(c).checked=this.checked">
+                    </span>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td><input type="checkbox" name="time[]" class="form-control" value="6am">6am</td>
+                            <td><input type="checkbox" name="time[]" class="form-control" value="6.20am">6.20am</td>
+                            <td><input type="checkbox" name="time[]" class="form-control" value="6.40am">6.40am</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td><input type="checkbox" name="time[]" class="form-control" value="7am">7am</td>
+                            <td><input type="checkbox" name="time[]" class="form-control" value="7.20am">7.20am</td>
+                            <td><input type="checkbox" name="time[]" class="form-control" value="7.40am">7.40am</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td><input type="checkbox" name="time[]" class="form-control" value="8am">8am</td>
+                            <td><input type="checkbox" name="time[]" class="form-control" value="8.20am">8.20am</td>
+                            <td><input type="checkbox" name="time[]" class="form-control" value="8.40am">8.40am</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">4</th>
+                            <td><input type="checkbox" name="time[]" class="form-control" value="9am">9am</td>
+                            <td><input type="checkbox" name="time[]" class="form-control" value="9.20am">9.20am</td>
+                            <td><input type="checkbox" name="time[]" class="form-control" value="9.40am">9.40am</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">5</th>
+                            <td><input type="checkbox" name="time[]" class="form-control" value="10am">10am</td>
+                            <td><input type="checkbox" name="time[]" class="form-control" value="10.20am">10.20am</td>
+                            <td><input type="checkbox" name="time[]" class="form-control" value="10.40am">10.40am</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">6</th>
+                            <td><input type="checkbox" name="time[]" class="form-control" value="11am">11am</td>
+                            <td><input type="checkbox" name="time[]" class="form-control" value="11.20am">11.20am</td>
+                            <td><input type="checkbox" name="time[]" class="form-control" value="11.40am">11.40am</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="card">
                 <div class="card-header">
@@ -148,7 +161,13 @@
                         </tbody>
                     </table>
                 </div>
-        </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
     </div>
 <style type="text/css">
     /*input[type="checkbox"]{*/
