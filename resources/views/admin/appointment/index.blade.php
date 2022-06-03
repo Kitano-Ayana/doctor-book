@@ -41,6 +41,7 @@
                 </div>
             </div>
         </form>
+        @if(Route::is('appointment.check'))
             <div class="card">
                 <div class="card-header">
                     Chose Am time
@@ -161,7 +162,9 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </div>
+        @endif
     </div>
+
     <style type="text/css">
         /*input[type="checkbox"]{*/
         /*    zoom: 0.5;*/
